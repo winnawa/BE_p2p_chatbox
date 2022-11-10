@@ -2,7 +2,10 @@ import express from 'express'
 import { ObjectId } from 'mongodb';
 import { client, createNewFriendship, createNewUser, getFriendListOfUser, updateSingleUser } from './mongodb/mainMongo.js';
 import { listAllUsers } from './mongodb/mainMongo.js';
+import cors from 'cors'
 const app = express()
+
+app.use(cors())
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
