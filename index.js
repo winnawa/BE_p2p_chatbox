@@ -1,7 +1,7 @@
 import express from 'express'
 import { ObjectId } from 'mongodb';
-import { client, createNewFriendship, createNewUser, getFriendListOfUser, updateSingleUser } from './mongodb/index.js';
-import { listAllUsers } from './mongodb/index.js';
+import { client, createNewFriendship, createNewUser, getFriendListOfUser, updateSingleUser } from './mongodb/mainMongo.js';
+import { listAllUsers } from './mongodb/mainMongo.js';
 const app = express()
 
 app.use(express.json())
