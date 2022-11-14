@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { response } from 'express'
 import { ObjectId } from 'mongodb';
 import { checkUserWithAccAndPass, client, createNewFriendship, createNewUser, getFriendListOfUser, updateSingleUser } from './mongodb/mainMongo.js';
 import { listAllUsers } from './mongodb/mainMongo.js';
@@ -33,7 +33,7 @@ app.post('/login', async(req,res)=>{
     if (obj_Account && obj_Password){
         //console.log(obj_Id.length)
     
-        const result = await checkUserWithAccAndPass(client,{"account" : obj_Account},{"password": obj_Password})
+        const result = await checkUserWithAccAndPass(client,obj_Account,obj_Password)
         if (result.length > 0){ 
             res.send({"id": result[0]["_id"], "status" : true})
         }
@@ -45,7 +45,7 @@ app.post('/login', async(req,res)=>{
     // console.log(obj.name)
     //console.log(obj_Id)
     //console.log(newStatus)
-    res.send({"status": "update unsuccessfully"})
+    res.send({"status": false })
     }
 })
 

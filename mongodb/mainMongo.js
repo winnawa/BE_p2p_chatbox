@@ -14,8 +14,10 @@ export const listAllUsers = async(client) => {
 
 
 export const checkUserWithAccAndPass = async(client, account, password) => {
-    const cursor = client.db("PEERinfo").collection("peerList").find({account: account, password: password})
+    
+    const cursor = client.db("PEERinfo").collection("peerList").find({"account": account, "password": password})
     const result = await cursor.toArray();
+    //console.log(result, "checkUserWithAccAndPass")
     return(result)
 }
 
