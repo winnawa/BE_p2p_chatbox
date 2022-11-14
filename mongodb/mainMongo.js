@@ -12,6 +12,15 @@ export const listAllUsers = async(client) => {
     return(result)
 }
 
+
+export const checkUserWithAccAndPass = async(client, account, password) => {
+    const cursor = client.db("PEERinfo").collection("peerList").find({account: account, password: password})
+    const result = await cursor.toArray();
+    return(result)
+}
+
+
+
 export const updateSingleUser = async(client,currentUser,newProps) => {
     let userID= ObjectId(currentUser.id)
     const result = await client.db("PEERinfo").collection("peerList").updateOne({"_id" : userID},

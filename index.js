@@ -1,6 +1,6 @@
 import express from 'express'
 import { ObjectId } from 'mongodb';
-import { client, createNewFriendship, createNewUser, getFriendListOfUser, updateSingleUser } from './mongodb/mainMongo.js';
+import { checkUserWithAccAndPass, client, createNewFriendship, createNewUser, getFriendListOfUser, updateSingleUser } from './mongodb/mainMongo.js';
 import { listAllUsers } from './mongodb/mainMongo.js';
 import cors from 'cors'
 const app = express()
@@ -24,6 +24,31 @@ app.get('/',(req,res)=>{
     res.send("hello world")
 
 })
+
+
+app.post('/login', async(req,res)=>{
+    const client_sent_obj = req.body
+    const obj_Account = client_sent_obj["account"]
+    const obj_Password = client_sent_obj["password"]
+    if (obj_Account && obj_Password){
+        //console.log(obj_Id.length)
+    
+        const result = await checkUserWithAccAndPass(client,{"account" : obj_Account},{"password": obj_Password})
+        if (result.length > 0){ 
+            res.send({"id": result[0]["_id"], "status" : true})
+        }
+        else{
+            res.send({"status" : false})
+        }
+    }
+    else{
+    // console.log(obj.name)
+    //console.log(obj_Id)
+    //console.log(newStatus)
+    res.send({"status": "update unsuccessfully"})
+    }
+})
+
 
 app.get('/getAllUsers', async(req,res)=>{
     const result = await listAllUsers(client)
@@ -92,11 +117,11 @@ app.post('/getFriendList', async(req,res)=>{
 app.post('/createFriendship', async(req,res)=>{
     // const result = await listAllUser(client)
     const client_sent_obj = req.body
-    const peerID = client_sent_obj["peerID"]
-    const friendID = client_sent_obj["friendID"] 
-    if (peerID && friendID ){
+    const peerId = client_sent_obj["peerId"]
+    const friendId = client_sent_obj["friendId"] 
+    if (peerId && friendId ){
         //console.log(obj_Id.length)
-        const result = await createNewFriendship(client, peerID, friendID)
+        const result = await createNewFriendship(client, peerId, friendId)
         if (result){
             res.send({"status":"createFriendship successfully"})
         }
