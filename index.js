@@ -43,11 +43,31 @@ app.post('/updateUserStatus', async(req,res)=>{
     }
     else{
     // console.log(obj.name)
-    console.log(obj_Id)
-    console.log(newStatus)
+    //console.log(obj_Id)
+    //console.log(newStatus)
     res.send({"status": "update unsuccessfully"})
     }
 })
+
+app.post('/updateUserAddress', async(req,res)=>{
+    // const result = await listAllUser(client)
+    const client_sent_obj = req.body
+    const obj_Id = client_sent_obj["id"]
+    const newAddress = client_sent_obj["address"]
+    if (obj_Id && newAddress){
+        //console.log(obj_Id.length)
+    
+        await updateSingleUser(client,{"id" : obj_Id},{"address": `${newAddress}`})
+        res.send({"status": "update successfully"})
+    }
+    else{
+    // console.log(obj.name)
+    //console.log(obj_Id)
+    //console.log(newStatus)
+    res.send({"status": "update unsuccessfully"})
+    }
+})
+
 
 app.post('/getFriendList', async(req,res)=>{
     // const result = await listAllUser(client)
