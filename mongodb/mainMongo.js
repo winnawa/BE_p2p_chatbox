@@ -76,7 +76,8 @@ export const getFriendListOfUser = async(client,currentUser)=>{
         // console.log(friendPeerId)
         const result = await client.db("PEERinfo").collection("peerList").findOne({"_id" : friendPeerId})
         //console.log(result)
-        friendListReal.push(result)
+        //friendListReal.push(result) //IMPORTANT
+        friendListReal.push({_id: result["_id"], address : result.address, name : result.name, last_name : result.last_name, status: result.status})
         //console.log("after adding",friendListReal)
         return result
     })
